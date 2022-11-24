@@ -26,6 +26,10 @@ RUN apt-get update && apt-get install --no-install-recommends --yes \
     python3-setuptools \
     python3-wheel \
     python3-dev \
+    nfs-common \
+    cifs-utils \
+    iputils-ping \
+    nano \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # install django-import-export
@@ -53,7 +57,9 @@ RUN mkdocs build --config-file /usr/share/doc/open-semantic-search/mkdocs.yml
 #
 
 COPY ./src/solr-php-ui/etc /etc
-
+COPY ./src/solr-php-ui/etc/solr-php-ui/apache.conf /etc/apache2/conf-available/solr-php-ui.conf
+RUN rm /etc/apache2/conf-enabled/solr-php-ui.conf
+RUN ln -s /etc/apache2/conf-available/solr-php-ui.conf /etc/apache2/conf-enabled/solr-php-ui.conf
 COPY ./src/solr-php-ui/src /usr/share/solr-php-ui/
 
 # This directory will provide initial content to the configuration volume:
@@ -74,6 +80,9 @@ COPY ./src/solr-relevance-ranking-analysis/src/solr_relevance_ranking_analysis /
 
 COPY ./src/open-semantic-search-apps/src /var/lib/opensemanticsearch/
 COPY ./src/open-semantic-search-apps/etc /etc/
+COPY ./src/open-semantic-search-apps/etc/opensemanticsearch-django-webapps/apache.conf /etc/apache2/conf-available/opensemanticsearch-django-webapps.conf
+RUN rm /etc/apache2/conf-enabled/opensemanticsearch-django-webapps.conf
+RUN ln -s /etc/apache2/conf-available/opensemanticsearch-django-webapps.conf /etc/apache2/conf-enabled/opensemanticsearch-django-webapps.conf
 COPY ./src/open-semantic-search-apps/var /var/
 
 #
@@ -117,7 +126,9 @@ RUN a2enmod wsgi
 
 # Reverse proxy for Flower task management web ui
 COPY ./src/flower/etc/apache2 /etc/apache2
-COPY ./src/flower/etc/flower /etc/flower
+COPY ./src/flower/etc/flower/apache.conf /etc/apache2/conf-available/flower.conf
+RUN rm /etc/apache2/conf-enabled/flower.conf
+RUN ln -s /etc/apache2/conf-available/flower.conf /etc/apache2/conf-enabled/flower.conf
 RUN a2enmod proxy && \
     a2enmod proxy_http
 

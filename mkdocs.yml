@@ -30,7 +30,7 @@ nav:
 theme:
     name: readthedocs
 
-plugins:
-    - search
-    - mermaid2:
-        version: 8.14.0
+#plugins:
+#    - search
+#    - mermaid2:
+#        version: 8.14.0
