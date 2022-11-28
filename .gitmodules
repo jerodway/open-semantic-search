@@ -3,7 +3,7 @@
 	url = https://github.com/opensemanticsearch/solr-php-ui.git
 [submodule "src/open-semantic-etl"]
 	path = src/open-semantic-etl
-	url = https://github.com/opensemanticsearch/open-semantic-etl.git
+	url = https://github.com/jerodway/open-semantic-etl.git
 [submodule "src/solr-ontology-tagger"]
 	path = src/solr-ontology-tagger
 	url = https://github.com/opensemanticsearch/solr-ontology-tagger.git
@@ -12,10 +12,10 @@
 	url = https://github.com/opensemanticsearch/open-semantic-visual-graph-explorer.git
 [submodule "src/open-semantic-search-apps"]
 	path = src/open-semantic-search-apps
-	url = https://github.com/opensemanticsearch/open-semantic-search-apps.git
+	url = https://github.com/jerodway/open-semantic-search-apps.git
 [submodule "src/open-semantic-entity-search-api"]
 	path = src/open-semantic-entity-search-api
-	url = https://github.com/opensemanticsearch/open-semantic-entity-search-api.git
+	url = https://github.com/jerodway/open-semantic-entity-search-api.git
 [submodule "src/solr-relevance-ranking-analysis"]
 	path = src/solr-relevance-ranking-analysis
 	url = https://github.com/opensemanticsearch/solr-relevance-ranking-analysis.git
@@ -24,7 +24,7 @@
 	url = https://github.com/opensemanticsearch/solr.deb.git
 [submodule "src/tika-server.deb"]
 	path = src/tika-server.deb
-	url = https://github.com/opensemanticsearch/tika-server.deb.git
+	url = https://github.com/jerodway/tika-server.deb.git
 [submodule "src/tika-python"]
 	path = src/tika-python
 	url = https://github.com/chrismattmann/tika-python.git
