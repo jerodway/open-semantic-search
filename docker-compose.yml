@@ -3,6 +3,7 @@ services:
 
   apps:
     image: opensemanticsearch/open-semantic-search
+    privileged: true
     build:
       context: .
     depends_on:
@@ -32,6 +33,7 @@ services:
 
   etl:
     image: opensemanticsearch/open-semantic-etl
+    privileged: true
     build:
       context: src/open-semantic-etl/
     depends_on:
@@ -53,11 +55,15 @@ services:
     env_file:
       - neo4j.env
     volumes:
+
       # read only (:ro), since workers don't need to change the config (is done only by admin or web ui in container apps)
       - config_etl:/etc/opensemanticsearch:ro
       # write access to persistent thumbnails dir
       - data_media:/var/opensemanticsearch/media
       - cache_tesseract:/var/cache/tesseract
+      #- D:/OneDrive - Baker Hughes/Documents/papers:/shared/papers
+      #- C:/Users/rodwjam/Desktop/slides:/shared/slides
+      #- D:/OneDrive - Baker Hughes/Documents/reading:/shared/reading
 
   solr:
     image: opensemanticsearch/solr
@@ -69,8 +75,8 @@ services:
       - data_solr:/var/solr
 
     # uncomment next two lines, if you want access the Solr API and admin UI on host IP
-    #ports:
-    #  - "8983:8983"
+    ports:
+      - "8983:8983"
 
   tika:
     image: opensemanticsearch/tika-server
@@ -132,3 +138,5 @@ volumes:
   data_neo4j:
   data_solr:
   cache_tesseract:
+
+

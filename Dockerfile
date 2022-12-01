@@ -132,6 +132,8 @@ RUN ln -s /etc/apache2/conf-available/flower.conf /etc/apache2/conf-enabled/flow
 RUN a2enmod proxy && \
     a2enmod proxy_http
 
+RUN mkdir /var/www/docs
+
 COPY ./docker-entrypoint.sh /
 RUN chmod 755 /docker-entrypoint.sh
 
