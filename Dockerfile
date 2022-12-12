@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install --no-install-recommends --yes \
     php \
     php-xml \
     php-bcmath \
+    php-curl \
     librabbitmq4 \
     python3-django \
     python3-pycurl \
