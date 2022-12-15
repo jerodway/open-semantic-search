@@ -1,0 +1,13 @@
+FROM mher/flower:latest
+
+USER root
+
+RUN /bin/sh -c pip install --no-cache-dir kombu
+
+COPY ./tasks /home/flower
+
+WORKDIR /home/flower
+
+USER flower
+
+CMD ["celery", "-A", "tasks", "flower"]
