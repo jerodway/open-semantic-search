@@ -90,6 +90,10 @@ def index_rss(uri):
     pass
 
 
+@app.task(name='etl.post_solr')
+def post_solr(string_to_send=None):
+    pass
+
 #
 # Enrich with / run plugins
 #
