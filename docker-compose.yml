@@ -104,16 +104,23 @@ services:
       context: src/spacy-services.deb/src/spacy-services/
 
   rabbitmq:
-    image: rabbitmq
+    image: rabbitmq:3-management
 
   flower:
     image: mher/flower
+    build:
+      context: src/flower_tasks
+      dockerfile: Dockerfile-flower
     environment:
-      - CELERY_BROKER_URL=amqp://rabbitmq
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq
+      - FLOWER_BROKER_API=http://guest:guest@rabbitmq:15672/api/vhost
       - FLOWER_PORT=5555
       - FLOWER_URL_PREFIX=flower
+      # - FLOWER_DEBUG=true
     depends_on:
       - rabbitmq
+    ports:
+      - "5555:5555"
 
   neo4j:
     image: neo4j
@@ -130,6 +137,16 @@ services:
       context: .
       dockerfile: Dockerfile-cron
 
+  pdfapp:
+    image: opensemanticsearch/pdfapp
+    build:
+      context: src/pdf_serve
+    volumes:
+      - pdf_temp:/shared/temp
+      #- C:/Users/rodwjam/Desktop/dump:/shared/dump
+    #ports:
+    #  - "5000:5000"
+
 volumes:
   config_etl:
   config_solr-php-ui:
@@ -138,5 +155,6 @@ volumes:
   data_neo4j:
   data_solr:
   cache_tesseract:
+  pdf_temp:
 
 
