@@ -30,6 +30,11 @@ services:
       - neo4j.env
     ports:
       - "8080:80"
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "10"
 
   etl:
     image: opensemanticsearch/open-semantic-etl
@@ -42,7 +47,7 @@ services:
       - solr
       - tika
       - tika-fakecache
-      - spacy-services
+      #- spacy-services
     environment:
       - OPEN_SEMANTIC_ETL_MQ_BROKER=amqp://rabbitmq
       - OPEN_SEMANTIC_ETL_METADATA_SERVER=http://apps/search-apps/annotate/json
@@ -73,10 +78,14 @@ services:
       - SOLR_LOCAL_HOST=0.0.0.0
     volumes:
       - data_solr:/var/solr
-
     # uncomment next two lines, if you want access the Solr API and admin UI on host IP
     ports:
       - "8983:8983"
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "10"
 
   tika:
     image: opensemanticsearch/tika-server
@@ -87,6 +96,11 @@ services:
       - TIKA_CONFIG=/etc/tika/tika-config-cache.xml
     volumes:
       - cache_tesseract:/var/cache/tesseract
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "10"
 
   tika-fakecache:
     image: opensemanticsearch/tika-server
@@ -97,14 +111,24 @@ services:
       - TIKA_CONFIG=/etc/tika/tika-config-fakecache.xml
     volumes:
       - cache_tesseract:/var/cache/tesseract
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "10"
 
-  spacy-services:
-    image: opensemanticsearch/spacy-services
-    build:
-      context: src/spacy-services.deb/src/spacy-services/
+#  spacy-services:
+#    image: opensemanticsearch/spacy-services
+#    build:
+#      context: src/spacy-services.deb/src/spacy-services/
 
   rabbitmq:
     image: rabbitmq:3-management
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "10"
 
   flower:
     image: mher/flower
@@ -121,14 +145,19 @@ services:
       - rabbitmq
     ports:
       - "5555:5555"
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "10"
 
-  neo4j:
-    image: neo4j
-    restart: always
-    env_file:
-      - neo4j.env
-    volumes:
-      - data_neo4j:/data
+#  neo4j:
+#    image: neo4j
+#    restart: always
+#    env_file:
+#      - neo4j.env
+#    volumes:
+#      - data_neo4j:/data
 
   # Cron service to enable crawlers to start
   cron:
@@ -136,6 +165,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-cron
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "10"
 
   pdfapp:
     image: opensemanticsearch/pdfapp
@@ -143,18 +177,24 @@ services:
       context: src/pdf_serve
     volumes:
       - pdf_temp:/shared/temp
-      #- C:/Users/rodwjam/Desktop/dump:/shared/dump
     #ports:
     #  - "5000:5000"
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: "10m"
+        max-file: "10"
 
 volumes:
   config_etl:
   config_solr-php-ui:
   data_db:
   data_media:
-  data_neo4j:
+  #data_neo4j:
   data_solr:
   cache_tesseract:
   pdf_temp:
+
+
 
 
